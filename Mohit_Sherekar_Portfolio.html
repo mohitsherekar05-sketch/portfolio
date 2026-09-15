@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mohit Sherekar — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f9fd;
+    --panel: #ffffff;
+    --panel-soft: #f1f6fc;
+    --line: #dce8f7;
+    --line-strong: #b9d0ec;
+    --ink: #12203a;
+    --blueprint: #1d4ed8;
+    --sky: #4f8fe8;
+    --sky-pale: #e4edfd;
+    --slate: #57698a;
+    --slate-light: #8b9cbc;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius-lg: 24px;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --shadow: 0 24px 48px -22px rgba(23, 53, 158, 0.22);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-display);
+    color: var(--slate);
+    background-color: var(--paper);
+    background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+    background-size: 28px 28px;
+    padding: 52px 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .layout {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 26px;
+    align-items: start;
+  }
+
+  /* ---------- shared panel chrome ---------- */
+  .panel {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blueprint), var(--sky));
+  }
+  .corner { position: absolute; width: 16px; height: 16px; opacity: 0.55; pointer-events: none; }
+  .corner.tl { top: 16px; left: 16px; border-top: 1.5px solid var(--sky); border-left: 1.5px solid var(--sky); }
+  .corner.br { bottom: 16px; right: 16px; border-bottom: 1.5px solid var(--sky); border-right: 1.5px solid var(--sky); }
+
+  /* ---------- sidebar ---------- */
+  .sidebar { padding: 44px 32px 36px; text-align: center; }
+
+  .avatar-wrap { position: relative; width: 184px; height: 184px; margin: 4px auto 24px; }
+  .avatar-ring { position: absolute; inset: 0; }
+  .avatar-photo {
+    position: absolute; top: 27px; left: 27px; width: 130px; height: 130px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blueprint), var(--sky));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-family: var(--font-mono); font-weight: 600;
+    font-size: 38px; letter-spacing: 1px;
+    box-shadow: 0 12px 26px -6px rgba(29, 78, 216, 0.45);
+  }
+
+  .name { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--ink); margin: 0 0 6px; letter-spacing: -0.01em; }
+  .role { font-size: 14.5px; color: var(--slate-light); margin: 0 0 24px; font-family: var(--font-mono); }
+
+  .btn-resume {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    width: 100%; padding: 14px 20px;
+    background: linear-gradient(135deg, var(--blueprint), var(--sky));
+    color: #fff; font-family: var(--font-mono); font-weight: 600;
+    letter-spacing: 0.08em; font-size: 12.5px; text-decoration: none;
+    border-radius: var(--radius-md);
+    box-shadow: 0 14px 26px -10px rgba(29, 78, 216, 0.6);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .btn-resume:hover { transform: translateY(-2px); box-shadow: 0 18px 30px -10px rgba(29, 78, 216, 0.65); }
+
+  .divider { height: 1px; background: var(--line); margin: 28px 0 22px; }
+
+  .contact-list { display: flex; flex-direction: column; gap: 13px; text-align: left; }
+  .contact-row { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: var(--slate); text-decoration: none; }
+  .contact-row .icon {
+    flex-shrink: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    background: var(--panel-soft); border: 1px solid var(--line); border-radius: 9px; color: var(--blueprint);
+  }
+  .contact-row:hover { color: var(--blueprint); }
+
+  .social-row { display: flex; justify-content: center; gap: 12px; margin-top: 26px; }
+  .social-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line-strong);
+    display: flex; align-items: center; justify-content: center; color: var(--blueprint);
+    text-decoration: none; font-family: var(--font-mono); font-weight: 600; font-size: 12.5px;
+    background: var(--panel-soft); transition: background 0.18s ease, color 0.18s ease;
+  }
+  .social-btn:hover { background: var(--blueprint); color: #fff; }
+
+  /* ---------- main panel ---------- */
+  .main { padding: 34px 42px 48px; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 28px; border-bottom: 1px solid var(--line); margin-bottom: 34px; }
+  .tab-btn {
+    background: none; border: none; cursor: pointer; font-family: var(--font-mono);
+    font-size: 12.5px; letter-spacing: 0.06em; color: var(--slate-light);
+    padding: 6px 1px 15px; position: relative; display: flex; align-items: center; gap: 7px;
+  }
+  .tab-btn .num { color: var(--sky); }
+  .tab-btn.active { color: var(--ink); }
+  .tab-btn.active .num { color: var(--blueprint); }
+  .tab-btn.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--blueprint); }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 4px; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .kicker {
+    display: flex; align-items: center; gap: 9px; font-family: var(--font-mono);
+    font-size: 12px; letter-spacing: 0.12em; color: var(--blueprint); margin: 0 0 14px; text-transform: uppercase;
+  }
+  .kicker .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blueprint); }
+
+  h1.page-title { font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--ink); margin: 0 0 18px; letter-spacing: -0.02em; }
+
+  .lead { font-size: 18px; color: var(--ink); margin: 0 0 26px; font-weight: 500; max-width: 60ch; line-height: 1.55; }
+
+  .about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 44px; }
+  .about-text p { font-size: 16px; line-height: 1.75; margin: 0 0 18px; max-width: 60ch; }
+
+  .section-label { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.1em; color: var(--blueprint); margin: 0 0 16px; }
+  .tag-grid { display: flex; flex-wrap: wrap; gap: 9px; }
+  .tag { font-family: var(--font-mono); font-size: 12.5px; padding: 9px 13px; background: var(--sky-pale); border: 1px solid var(--line-strong); color: var(--blueprint); border-radius: 8px; }
+
+  /* resume tab */
+  .resume-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 18px; margin-bottom: 32px; }
+  .btn-small {
+    display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11.5px;
+    font-weight: 600; letter-spacing: 0.08em; padding: 12px 18px; border-radius: var(--radius-sm);
+    background: var(--ink); color: #fff; text-decoration: none; white-space: nowrap;
+  }
+
+  .timeline { position: relative; padding-left: 26px; margin-bottom: 34px; }
+  .timeline::before { content: ''; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; background: var(--line-strong); }
+  .timeline-item { position: relative; margin-bottom: 26px; }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-item::before { content: ''; position: absolute; left: -26px; top: 4px; width: 11px; height: 11px; border-radius: 50%; background: var(--blueprint); border: 3px solid var(--sky-pale); }
+  .timeline-item h3 { margin: 0 0 4px; color: var(--ink); font-size: 17px; font-weight: 600; }
+  .timeline-item .meta { font-family: var(--font-mono); font-size: 12px; color: var(--blueprint); margin: 0 0 10px; }
+  .timeline-item ul { margin: 0; padding-left: 18px; }
+  .timeline-item li { font-size: 14.5px; line-height: 1.7; margin-bottom: 6px; }
+
+  .info-card { background: var(--panel-soft); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 22px 24px; }
+  .info-card h4 { margin: 0 0 12px; color: var(--ink); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.08em; }
+  .info-card p { font-size: 14px; line-height: 1.7; margin: 0 0 8px; }
+  .info-card p:last-child { margin-bottom: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+  /* projects */
+  .project-card { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 26px 28px; margin-bottom: 20px; background: var(--panel-soft); }
+  .project-card:last-child { margin-bottom: 0; }
+  .project-badge { display: inline-block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--blueprint); background: var(--sky-pale); padding: 4px 10px; border-radius: 6px; margin-bottom: 13px; }
+  .project-card h3 { margin: 0 0 12px; color: var(--ink); font-size: 19px; font-weight: 600; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .project-tags span { font-family: var(--font-mono); font-size: 11.5px; color: var(--blueprint); border: 1px solid var(--line-strong); padding: 4px 10px; border-radius: 6px; }
+  .project-card ul { margin: 0; padding-left: 18px; }
+  .project-card li { font-size: 14.5px; line-height: 1.7; margin-bottom: 6px; }
+
+  /* youtube */
+  .yt-placeholder { border: 1.5px dashed var(--line-strong); border-radius: var(--radius-md); padding: 56px 30px; text-align: center; color: var(--slate-light); }
+  .yt-placeholder .play { width: 52px; height: 52px; border-radius: 50%; background: var(--sky-pale); color: var(--blueprint); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 18px; }
+  .yt-placeholder p { margin: 0; font-size: 14.5px; max-width: 42ch; margin: 0 auto; }
+
+  /* contact */
+  .contact-form { display: flex; flex-direction: column; gap: 15px; }
+  .contact-form label { font-family: var(--font-mono); font-size: 11px; color: var(--slate-light); letter-spacing: 0.08em; }
+  .contact-form input, .contact-form textarea {
+    width: 100%; padding: 12px 15px; border-radius: var(--radius-sm); border: 1px solid var(--line-strong);
+    background: var(--panel-soft); font-family: var(--font-display); font-size: 14.5px; color: var(--ink);
+  }
+  .contact-form input:focus-visible, .contact-form textarea:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 1px; }
+  .contact-form textarea { resize: vertical; min-height: 112px; }
+  .btn-submit {
+    align-self: flex-start; font-family: var(--font-mono); font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em;
+    padding: 13px 24px; border: none; border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--blueprint), var(--sky)); color: #fff; cursor: pointer;
+    box-shadow: 0 14px 26px -10px rgba(29, 78, 216, 0.6);
+  }
+  .form-note { font-size: 12.5px; color: var(--slate-light); margin-top: -3px; }
+
+  footer.site-footer { max-width: 1240px; margin: 26px auto 0; text-align: center; font-family: var(--font-mono); font-size: 11.5px; color: var(--slate-light); }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 30px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .main { padding: 30px 26px 40px; }
+  }
+  @media (max-width: 520px) {
+    body { padding: 26px 14px; }
+    .sidebar { padding: 36px 22px 28px; }
+    h1.page-title { font-size: 30px; }
+    .tabs { gap: 16px 20px; }
+    .resume-header { flex-direction: column; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="panel sidebar">
+    <span class="corner tl"></span><span class="corner br"></span>
+
+    <div class="avatar-wrap">
+      <svg class="avatar-ring" viewBox="0 0 184 184" width="184" height="184" aria-hidden="true">
+        <circle cx="92" cy="92" r="83" fill="none" stroke="#b9d0ec" stroke-width="1.4" stroke-dasharray="3 7"/>
+        <g stroke="#1d4ed8" stroke-width="1.8" stroke-linecap="round" opacity="0.55">
+          <line x1="92" y1="2" x2="92" y2="13"/>
+          <line x1="92" y1="171" x2="92" y2="182"/>
+          <line x1="2" y1="92" x2="13" y2="92"/>
+          <line x1="171" y1="92" x2="182" y2="92"/>
+          <line x1="27" y1="27" x2="35" y2="35"/>
+          <line x1="149" y1="149" x2="157" y2="157"/>
+          <line x1="149" y1="35" x2="157" y2="27"/>
+          <line x1="27" y1="157" x2="35" y2="149"/>
+        </g>
+        <circle cx="92" cy="6" r="2.8" fill="#1d4ed8"/>
+        <circle cx="178" cy="92" r="2.2" fill="#4f8fe8"/>
+      </svg>
+      <div class="avatar-photo">MS</div>
+    </div>
+
+    <h1 class="name">Mohit Sherekar</h1>
+    <p class="role">Electronics Engineering Student</p>
+
+    <a class="btn-resume" href="Mohit_Sherekar_Resume.pdf" download>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+      RESUME
+    </a>
+
+    <div class="divider"></div>
+
+    <div class="contact-list">
+      <a class="contact-row" href="mailto:mohit.sherekar05@gmail.com">
+        <span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+        <span>mohit.sherekar05@gmail.com</span>
+      </a>
+      <a class="contact-row" href="tel:+919309401152">
+        <span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13 1 .36 1.9.7 2.8a2 2 0 0 1-.45 2.11L8.1 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.9z"/></svg></span>
+        <span>+91 9309401152</span>
+      </a>
+      <div class="contact-row">
+        <span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <span>Nagpur, Maharashtra 440024</span>
+      </div>
+    </div>
+
+    <div class="social-row">
+      <a class="social-btn" href="https://www.linkedin.com/in/sherekarmohit" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+      <a class="social-btn" href="mailto:mohit.sherekar05@gmail.com" aria-label="Email">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="panel main">
+    <span class="corner tl"></span><span class="corner br"></span>
+
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="about"><span class="num">01</span><span>ABOUT</span></button>
+      <button class="tab-btn" data-tab="resume"><span class="num">02</span><span>RESUME</span></button>
+      <button class="tab-btn" data-tab="projects"><span class="num">03</span><span>PROJECTS</span></button>
+      <button class="tab-btn" data-tab="youtube"><span class="num">04</span><span>YOUTUBE</span></button>
+      <button class="tab-btn" data-tab="contact"><span class="num">05</span><span>CONTACT</span></button>
+    </nav>
+
+    <!-- ABOUT -->
+    <section class="tab-panel active" id="about">
+      <p class="kicker"><span class="dot"></span><span>01 / About</span></p>
+      <h1 class="page-title">Profile</h1>
+      <p class="lead">Python Programming Intern with hands-on coding experience and a growing foundation in embedded systems.</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I completed a virtual Python Programming internship at Cognifyz Technologies, where I built small applications for string manipulation, file handling, data validation, and mathematical algorithms — including password-strength and email-validation utilities using regular expressions and exception handling.</p>
+          <p>My Electronics Engineering coursework has given me a solid base in embedded systems and microcontrollers, which I pair with programming knowledge in C, C++, and Java to approach problems from both the hardware and software sides.</p>
+          <p>Outside the classroom, I take on project leadership and event coordination — from managing a technical track at the MGI Ideathon to helping organize the ICETEMS 2026 conference at YCCE — and enjoy hands-on builds like EEG-based neurofeedback devices and STM32 security systems.</p>
+        </div>
+        <div class="core-stack">
+          <p class="section-label">// Core stack</p>
+          <div class="tag-grid">
+            <span class="tag">Python</span>
+            <span class="tag">C</span>
+            <span class="tag">C++</span>
+            <span class="tag">Java</span>
+            <span class="tag">Embedded C</span>
+            <span class="tag">Microcontrollers</span>
+            <span class="tag">STM32</span>
+            <span class="tag">DSP Techniques</span>
+            <span class="tag">Circuit Design</span>
+            <span class="tag">Regex &amp; Validation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME -->
+    <section class="tab-panel" id="resume">
+      <div class="resume-header">
+        <div>
+          <p class="kicker"><span class="dot"></span><span>02 / Resume</span></p>
+          <h1 class="page-title" style="margin-bottom:0;">Experience</h1>
+        </div>
+        <a class="btn-small" href="Mohit_Sherekar_Resume.pdf" download>DOWNLOAD PDF</a>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>Python Programming Intern — Cognifyz Technologies</h3>
+          <p class="meta">Remote  •  06/2025 – 07/2025</p>
+          <ul>
+            <li>4-week virtual internship focused on Python programming and practical development experience.</li>
+            <li>Built Python applications for string manipulation, file handling, data validation, and mathematical algorithms.</li>
+            <li>Created password-strength and email-validation utilities using regular expressions and logical conditions.</li>
+            <li>Implemented input validation and exception handling to improve reliability and user experience.</li>
+          </ul>
+        </div>
+        <div class="timeline-item">
+          <h3>B.Tech, Electronics Engineering — YCCE, Nagpur</h3>
+          <p class="meta">Expected 06/2027  •  GPA 8.013</p>
+          <ul>
+            <li>Coursework spanning embedded systems, microcontroller programming, and core electronics.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-card">
+          <h4>CERTIFICATIONS</h4>
+          <p>3D Modelling and Printing — 23 Mar – 13 Apr 2025</p>
+          <p>Learning to Code in Python 3: Beginner to Advanced — 10 Nov 2025</p>
+          <p>VAC Course on Generative AI — 10–12 Aug 2024</p>
+        </div>
+        <div class="info-card">
+          <h4>EXTRA-CURRICULAR</h4>
+          <p>Track Manager — MGI Ideathon (National Startup Day), YCCE Nagpur</p>
+          <p>Organizing Committee Member — ICETEMS 2026, YCCE Nagpur</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="tab-panel" id="projects">
+      <p class="kicker"><span class="dot"></span><span>03 / Projects</span></p>
+      <h1 class="page-title">Selected Work</h1>
+
+      <div class="project-card">
+        <span class="project-badge">FINAL YEAR PROJECT</span>
+        <h3>EEG Monitoring &amp; Therapeutic Audio Feedback</h3>
+        <div class="project-tags"><span>EEG</span><span>DSP</span><span>Embedded Systems</span><span>Signal Processing</span></div>
+        <ul>
+          <li>Real-time EEG monitoring and adaptive audio neurofeedback system built to support Autism Spectrum Disorder (ASD) therapy.</li>
+          <li>Designed the EEG signal-conditioning circuit, integrating electrodes, analog front-end, microcontroller, and display for live monitoring.</li>
+          <li>Applied DSP techniques to process EEG signals into a low-cost, scalable embedded platform for future adaptive-audio feedback.</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <span class="project-badge">STM32-BASED PROJECT</span>
+        <h3>Smart Workspace Guard System</h3>
+        <div class="project-tags"><span>STM32</span><span>IR / Touch / LDR</span><span>OLED</span><span>Security</span></div>
+        <ul>
+          <li>STM32-based workspace security system combining IR, touch, and LDR sensors with an OLED status display.</li>
+          <li>SAFE / ARMED modes trigger a motion-activated buzzer and LED alerts automatically.</li>
+          <li>Built as a low-cost, real-time monitoring solution for study desks, hostel rooms, and shared workspaces.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- YOUTUBE -->
+    <section class="tab-panel" id="youtube">
+      <p class="kicker"><span class="dot"></span><span>04 / YouTube</span></p>
+      <h1 class="page-title">Video Log</h1>
+      <div class="yt-placeholder">
+        <div class="play">▶</div>
+        <p>No videos linked yet — add your channel URL and embeds here once it's live.</p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="tab-panel" id="contact">
+      <p class="kicker"><span class="dot"></span><span>05 / Contact</span></p>
+      <h1 class="page-title">Get In Touch</h1>
+      <p class="lead" style="font-weight:400; font-size:16px;">Have a project in mind or want to collaborate? Send a message or reach out directly.</p>
+      <div class="grid-2">
+        <div class="info-card">
+          <h4>DIRECT CONTACT</h4>
+          <p>mohit.sherekar05@gmail.com</p>
+          <p>+91 9309401152</p>
+          <p>Nagpur, Maharashtra 440024</p>
+          <p>linkedin.com/in/sherekarmohit</p>
+        </div>
+        <form class="contact-form" id="contact-form">
+          <label for="cf-name">NAME</label>
+          <input type="text" id="cf-name" required />
+          <label for="cf-email">EMAIL</label>
+          <input type="email" id="cf-email" required />
+          <label for="cf-message">MESSAGE</label>
+          <textarea id="cf-message" required></textarea>
+          <button type="submit" class="btn-submit">SEND MESSAGE</button>
+          <p class="form-note">Opens your email app with the message pre-filled.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="site-footer">Mohit Sherekar — Electronics Engineering</footer>
+
+<script>
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.tab-panel');
+  tabBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      tabBtns.forEach(function (b) { b.classList.remove('active'); });
+      panels.forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  var form = document.getElementById('contact-form');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('cf-name').value;
+    var email = document.getElementById('cf-email').value;
+    var message = document.getElementById('cf-message').value;
+    var subject = encodeURIComponent('Portfolio message from ' + name);
+    var body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+    window.location.href = 'mailto:mohit.sherekar05@gmail.com?subject=' + subject + '&body=' + body;
+  });
+</script>
+</body>
+</html>
